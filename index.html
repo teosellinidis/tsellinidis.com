@@ -315,6 +315,8 @@
           </div>
           <div class="row" style="min-width: 320px; flex: 1; justify-content:flex-end;">
             <label class="sr-only" for="photoFilter">Category</label>
+            <div class="row" id="photoChips" style="gap:8px; margin-top:10px; flex-wrap:wrap;"></div>
+
             <select id="photoFilter" class="select" style="max-width: 220px;">
               <option value="all">All</option>
             </select>
@@ -523,6 +525,29 @@
 
     const categories = ["all", ...Array.from(new Set(SITE.photos.map(p => p.category))).sort()];
     photoFilter.innerHTML = categories.map(c => `<option value="${c}">${c === "all" ? "All" : c}</option>`).join("");
+const photoChips = $("#photoChips");
+
+function renderCategoryChips(){
+  photoChips.innerHTML = categories.map(c => {
+    const label = (c === "all") ? "All" : c;
+    return `<button class="pill" data-cat="${c}" type="button" style="cursor:pointer;">${label}</button>`;
+  }).join("");
+
+  // highlight active
+  [...photoChips.querySelectorAll("button")].forEach(btn => {
+    const active = btn.dataset.cat === photoFilter.value;
+    btn.style.borderColor = active ? "rgba(122,162,255,.55)" : "rgba(255,255,255,.08)";
+  });
+}
+
+photoChips.addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-cat]");
+  if(!btn) return;
+  photoFilter.value = btn.dataset.cat;
+  renderPhotos();
+ 
+  renderCategoryChips();
+});
 
     function renderPhotos(){
       const cat = photoFilter.value;
@@ -683,6 +708,7 @@
   </script>
 </body>
 </html>
+
 
 
 
