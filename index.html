@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Theodoros Sellinidis — Photos, Articles, Events, Contact." />
+  <title>tsellinidis.com — Theodoros Sellinidis</title>
+
+  <style>
+    :root{
+      --bg:#0b0f19;
+      --panel:#10182a;
+      --panel2:#0f1726;
+      --text:#e8eefc;
+      --muted:#a8b3cf;
+      --brand:#7aa2ff;
+      --brand2:#5de4c7;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(122,162,255,.18), transparent 60%),
+                  radial-gradient(1000px 700px at 85% 20%, rgba(93,228,199,.14), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 60px}
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:14px 14px; border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: sticky; top: 14px; z-index: 20; backdrop-filter: blur(10px);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width: 220px;
+    }
+    .avatar{
+      width:40px; height:40px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(122,162,255,.9), rgba(93,228,199,.85));
+      display:grid; place-items:center; color:#081022; font-weight:800;
+      box-shadow: 0 10px 28px rgba(0,0,0,.25);
+      user-select:none;
+    }
+    .brand h1{font-size:14px; margin:0; letter-spacing:.4px}
+    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
+    nav{
+      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .tab{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-size: 13px;
+      display:flex; align-items:center; gap:8px;
+      transition: transform .08s ease, background .18s ease, border-color .18s ease;
+      user-select:none;
+    }
+    .tab:hover{transform: translateY(-1px); background: rgba(255,255,255,.06)}
+    .tab[aria-selected="true"]{
+      background: linear-gradient(135deg, rgba(122,162,255,.22), rgba(93,228,199,.14));
+      border-color: rgba(122,162,255,.55);
+      box-shadow: 0 10px 26px rgba(122,162,255,.10);
+    }
+    .kicker{
+      margin:26px 0 18px;
+      display:grid; gap:12px;
+    }
+    .hero{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      padding:22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 240px at 20% 10%, rgba(122,162,255,.22), transparent 55%),
+                  radial-gradient(560px 240px at 85% 40%, rgba(93,228,199,.18), transparent 55%);
+      pointer-events:none;
+      opacity:.8;
+    }
+    .hero > *{position:relative; z-index:1}
+    .hero h2{margin:0 0 8px; font-size:24px; letter-spacing:.2px}
+    .hero p{margin:0; color: var(--muted); max-width: 70ch}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+    .chip{
+      font-size:12px; color: var(--text);
+      border:1px solid var(--border);
+      background: rgba(16,24,42,.55);
+      padding:8px 10px; border-radius: 999px;
+    }
+
+    main{
+      margin-top:18px;
+      display:grid; gap:16px;
+    }
+    .panel{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(16,24,42,.78), rgba(16,24,42,.56));
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .panel h3{margin:0 0 12px; font-size:16px}
+    .muted{color:var(--muted)}
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .spacer{height:10px}
+    .input, .select, textarea{
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      color: var(--text);
+      padding: 11px 12px;
+      border-radius: 14px;
+      outline:none;
+    }
+    textarea{min-height:120px; resize:vertical}
+    .btn{
+      border:1px solid rgba(122,162,255,.45);
+      background: linear-gradient(135deg, rgba(122,162,255,.22), rgba(93,228,199,.14));
+      color: var(--text);
+      padding: 11px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-size:13px;
+      transition: transform .08s ease, filter .18s ease;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn:hover{transform: translateY(-1px); filter: brightness(1.07)}
+    .btn.secondary{
+      border-color: var(--border);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Photos */
+    .filters{display:flex; gap:10px; flex-wrap:wrap}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .card{
+      grid-column: span 4;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius: 16px;
+      overflow: hidden;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .18s ease;
+      min-height: 220px;
+      display:flex; flex-direction:column;
+    }
+    .card:hover{transform: translateY(-2px); border-color: rgba(122,162,255,.45)}
+    .thumb{
+      height: 150px;
+      background: rgba(122,162,255,.08);
+      display:grid; place-items:center;
+      color: var(--muted);
+      font-size:12px;
+    }
+    .card .meta{padding:12px}
+    .card .meta b{display:block; font-size:13px; margin-bottom:4px}
+    .card .meta span{font-size:12px; color:var(--muted)}
+    @media (max-width: 980px){
+      .card{grid-column: span 6}
+    }
+    @media (max-width: 620px){
+      header{flex-direction:column; align-items:stretch}
+      .brand{min-width:unset}
+      nav{justify-content:flex-start}
+      .card{grid-column: span 12}
+    }
+
+    /* Articles */
+    .list{display:grid; gap:10px}
+    .item{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      padding: 12px 12px;
+      border-radius: 14px;
+      display:flex; gap:10px; justify-content:space-between; align-items:flex-start;
+    }
+    .item b{display:block; font-size:13px; margin-bottom:3px}
+    .item p{margin:0; font-size:12px; color:var(--muted)}
+    .pill{
+      font-size:11px; color:var(--text);
+      border:1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(16,24,42,.55);
+      white-space: nowrap;
+    }
+
+    /* Events */
+    .timeline{display:grid; gap:10px}
+    .event{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      padding: 12px 12px;
+      border-radius: 14px;
+      display:grid;
+      grid-template-columns: 140px 1fr;
+      gap: 10px;
+    }
+    .event time{font-size:12px; color:var(--muted)}
+    .event b{display:block; font-size:13px; margin-bottom:3px}
+    .event small{color:var(--muted)}
+    @media (max-width: 620px){
+      .event{grid-template-columns: 1fr}
+    }
+
+    /* Modal */
+    .modal{
+      position: fixed; inset: 0; z-index: 50;
+      display:none;
+      background: rgba(0,0,0,.62);
+      padding: 18px;
+    }
+    .modal[aria-hidden="false"]{display:grid; place-items:center}
+    .modalBox{
+      width:min(900px, 100%);
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(16,24,42,.95), rgba(16,24,42,.78));
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalTop{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding: 12px 12px;
+      border-bottom:1px solid var(--border);
+    }
+    .modalTop b{font-size:13px}
+    .modalBody{padding: 14px}
+    .bigImg{
+      height: 420px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(122,162,255,.08);
+      display:grid; place-items:center;
+      color: var(--muted);
+      font-size:12px;
+      overflow:hidden;
+    }
+    .footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="avatar" title="TS">TS</div>
+        <div>
+          <h1 id="siteName">Theodoros Sellinidis</h1>
+          <p id="siteTagline">Photos • Articles • Events • Contact</p>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <button class="tab" data-view="photos" aria-selected="true">📷 Photos</button>
+        <button class="tab" data-view="articles" aria-selected="false">📝 Articles</button>
+        <button class="tab" data-view="events" aria-selected="false">📅 Events</button>
+        <button class="tab" data-view="contact" aria-selected="false">✉️ Contact</button>
+      </nav>
+    </header>
+
+    <section class="kicker">
+      <div class="hero">
+        <h2 id="heroTitle">Personal site</h2>
+        <p id="heroDesc">
+          A compact hub for my work, travel, and updates — with a photo gallery, selected articles, upcoming events, and direct contact.
+        </p>
+        <div class="chips" id="chips"></div>
+      </div>
+    </section>
+
+    <main>
+      <!-- PHOTOS -->
+      <section class="panel" data-section="photos">
+        <div class="row" style="justify-content:space-between; gap:12px;">
+          <div>
+            <h3>Photos</h3>
+            <div class="muted">Browse by category — click a photo to open it.</div>
+          </div>
+          <div class="row" style="min-width: 320px; flex: 1; justify-content:flex-end;">
+            <label class="sr-only" for="photoFilter">Category</label>
+            <select id="photoFilter" class="select" style="max-width: 220px;">
+              <option value="all">All</option>
+            </select>
+            <label class="sr-only" for="photoSearch">Search</label>
+            <input id="photoSearch" class="input" placeholder="Search photos…" style="max-width: 240px;" />
+          </div>
+        </div>
+
+        <div id="photoGrid" class="grid" aria-live="polite"></div>
+      </section>
+
+      <!-- ARTICLES -->
+      <section class="panel" data-section="articles" hidden>
+        <div class="row" style="justify-content:space-between; gap:12px;">
+          <div>
+            <h3>Articles</h3>
+            <div class="muted">Short posts and longer write-ups.</div>
+          </div>
+          <div class="row" style="min-width: 320px; flex: 1; justify-content:flex-end;">
+            <label class="sr-only" for="articleSearch">Search</label>
+            <input id="articleSearch" class="input" placeholder="Search articles…" style="max-width: 320px;" />
+          </div>
+        </div>
+
+        <div id="articleList" class="list"></div>
+      </section>
+
+      <!-- EVENTS -->
+      <section class="panel" data-section="events" hidden>
+        <div class="row" style="justify-content:space-between; gap:12px;">
+          <div>
+            <h3>Events</h3>
+            <div class="muted">Appearances, meetings, conferences, and milestones.</div>
+          </div>
+          <div class="row" style="min-width: 320px; flex: 1; justify-content:flex-end;">
+            <label class="sr-only" for="eventSearch">Search</label>
+            <input id="eventSearch" class="input" placeholder="Search events…" style="max-width: 320px;" />
+          </div>
+        </div>
+
+        <div id="eventTimeline" class="timeline"></div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="panel" data-section="contact" hidden>
+        <h3>Contact</h3>
+        <div class="muted">Send a message directly, or use the links below.</div>
+        <div class="spacer"></div>
+
+        <div class="row" style="gap:12px; align-items:flex-start;">
+          <div style="flex: 1; min-width: 260px;">
+            <div class="row" style="gap:10px;">
+              <button class="btn" id="btnEmail">✉️ Email</button>
+              <a class="btn secondary" id="btnLinkedIn" href="#" target="_blank" rel="noopener">in LinkedIn</a>
+              <a class="btn secondary" id="btnInstagram" href="#" target="_blank" rel="noopener">📷 Instagram</a>
+            </div>
+            <div class="spacer"></div>
+
+            <div class="panel" style="padding:14px; background: rgba(255,255,255,.03);">
+              <div><b>Details</b></div>
+              <div class="muted" id="contactDetails" style="margin-top:6px;"></div>
+            </div>
+          </div>
+
+          <div style="flex: 1.3; min-width: 280px;">
+            <form id="contactForm">
+              <div class="row">
+                <div style="flex:1">
+                  <label class="sr-only" for="name">Name</label>
+                  <input class="input" id="name" placeholder="Your name" required />
+                </div>
+                <div style="flex:1">
+                  <label class="sr-only" for="email">Email</label>
+                  <input class="input" id="email" placeholder="Your email" type="email" required />
+                </div>
+              </div>
+              <div class="spacer"></div>
+              <label class="sr-only" for="message">Message</label>
+              <textarea id="message" placeholder="Write your message…" required></textarea>
+              <div class="spacer"></div>
+              <button class="btn" type="submit">Send message</button>
+              <div class="muted" style="margin-top:8px; font-size:12px;">
+                This form opens your email app (mailto). No data is stored on the site.
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">© <span id="year"></span> tsellinidis.com</div>
+    </main>
+  </div>
+
+  <!-- Photo Modal -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Photo preview">
+    <div class="modalBox">
+      <div class="modalTop">
+        <b id="modalTitle">Photo</b>
+        <button class="btn secondary" id="modalClose">✕ Close</button>
+      </div>
+      <div class="modalBody">
+        <div class="bigImg" id="modalImg">Image preview</div>
+        <div class="spacer"></div>
+        <div class="muted" id="modalCaption"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === EDIT HERE: your site content ===
+    const SITE = {
+      name: "Theodoros Sellinidis",
+      tagline: "Photos • Articles • Events • Contact",
+      heroTitle: "Personal site",
+      heroDesc: "A compact hub for my work, travel, and updates — with a photo gallery, selected articles, upcoming events, and direct contact.",
+      chips: ["Shipping & Automation", "Technical Management", "Projects & Travel"],
+      contact: {
+        email: "you@domain.com",
+        phone: "+xx xxx xxx xxxx",
+        location: "Europe / Global",
+        linkedin: "https://www.linkedin.com/in/yourprofile",
+        instagram: "https://www.instagram.com/yourprofile"
+      },
+      photos: [
+        // Replace src with real image paths, e.g. "assets/photos/posidonia.jpg"
+        { title: "Conference moment", caption: "Short description here", category: "Events", src: "" },
+        { title: "On board", caption: "Short description here", category: "Work", src: "" },
+        { title: "Travel", caption: "Short description here", category: "Travel", src: "" },
+        { title: "Workshop", caption: "Short description here", category: "Work", src: "" },
+        { title: "Evening city", caption: "Short description here", category: "Travel", src: "" },
+        { title: "Team day", caption: "Short description here", category: "Events", src: "" }
+      ],
+      articles: [
+        // If url is empty, it will show as a non-clickable item
+        { title: "How I approach technical management", date: "2026-01-10", tag: "Ops", summary: "A short overview of prioritization, reliability, and vendor control.", url: "" },
+        { title: "Automation upgrades that pay back fast", date: "2025-12-05", tag: "Automation", summary: "Where the ROI is typically strongest across fleets.", url: "" }
+      ],
+      events: [
+        { title: "Client meeting — Piraeus", date: "2026-02-14", location: "Piraeus, GR", note: "Technical scope & planning." },
+        { title: "Industry conference", date: "2026-05-20", location: "TBD", note: "Speaking / networking." }
+      ]
+    };
+
+    // === Helpers ===
+    const $ = (q, el=document) => el.querySelector(q);
+    const $$ = (q, el=document) => [...el.querySelectorAll(q)];
+    const fmtDate = (iso) => {
+      try{
+        const d = new Date(iso + "T00:00:00");
+        return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" });
+      } catch { return iso; }
+    };
+
+    // === Init header/hero ===
+    $("#siteName").textContent = SITE.name;
+    $("#siteTagline").textContent = SITE.tagline;
+    $("#heroTitle").textContent = SITE.heroTitle;
+    $("#heroDesc").textContent = SITE.heroDesc;
+    $("#chips").innerHTML = SITE.chips.map(c => `<span class="chip">${c}</span>`).join("");
+    $("#year").textContent = new Date().getFullYear();
+
+    // === Tabs navigation ===
+    function showSection(view){
+      $$(".tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === view)));
+      $$("[data-section]").forEach(sec => {
+        const isTarget = sec.getAttribute("data-section") === view;
+        sec.hidden = !isTarget;
+      });
+      // subtle UX: scroll to top of content
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    $$(".tab").forEach(b => b.addEventListener("click", () => showSection(b.dataset.view)));
+
+    // === Photos ===
+    const photoFilter = $("#photoFilter");
+    const photoSearch = $("#photoSearch");
+    const photoGrid = $("#photoGrid");
+
+    const categories = ["all", ...Array.from(new Set(SITE.photos.map(p => p.category))).sort()];
+    photoFilter.innerHTML = categories.map(c => `<option value="${c}">${c === "all" ? "All" : c}</option>`).join("");
+
+    function renderPhotos(){
+      const cat = photoFilter.value;
+      const term = photoSearch.value.trim().toLowerCase();
+      const items = SITE.photos.filter(p => {
+        const okCat = (cat === "all") || (p.category === cat);
+        const hay = (p.title + " " + p.caption + " " + p.category).toLowerCase();
+        const okTerm = !term || hay.includes(term);
+        return okCat && okTerm;
+      });
+
+      photoGrid.innerHTML = items.map((p, idx) => {
+        const hasSrc = !!p.src;
+        return `
+          <article class="card" data-idx="${SITE.photos.indexOf(p)}" title="Open">
+            <div class="thumb">
+              ${hasSrc ? `<img src="${p.src}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;">` : "Add image src in SITE.photos"}
+            </div>
+            <div class="meta">
+              <b>${p.title}</b>
+              <span>${p.category} • ${p.caption || ""}</span>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      if(items.length === 0){
+        photoGrid.innerHTML = `<div class="muted" style="grid-column:1/-1; padding: 8px 0;">No photos match your filters.</div>`;
+      }
+    }
+    photoFilter.addEventListener("change", renderPhotos);
+    photoSearch.addEventListener("input", renderPhotos);
+
+    // Modal
+    const modal = $("#modal");
+    const modalTitle = $("#modalTitle");
+    const modalCaption = $("#modalCaption");
+    const modalImg = $("#modalImg");
+    const modalClose = $("#modalClose");
+
+    function openModal(photo){
+      modal.setAttribute("aria-hidden", "false");
+      modalTitle.textContent = photo.title;
+      modalCaption.textContent = `${photo.category}${photo.caption ? " • " + photo.caption : ""}`;
+
+      if(photo.src){
+        modalImg.innerHTML = `<img src="${photo.src}" alt="${photo.title}" style="width:100%;height:100%;object-fit:cover;">`;
+      } else {
+        modalImg.textContent = "Add image src in SITE.photos to display a real image here.";
+      }
+    }
+    function closeModal(){
+      modal.setAttribute("aria-hidden", "true");
+    }
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
+
+    photoGrid.addEventListener("click", (e) => {
+      const card = e.target.closest(".card");
+      if(!card) return;
+      const idx = Number(card.dataset.idx);
+      openModal(SITE.photos[idx]);
+    });
+
+    // === Articles ===
+    const articleList = $("#articleList");
+    const articleSearch = $("#articleSearch");
+
+    function renderArticles(){
+      const term = articleSearch.value.trim().toLowerCase();
+      const items = SITE.articles
+        .slice()
+        .sort((a,b) => (b.date || "").localeCompare(a.date || ""))
+        .filter(a => {
+          const hay = (a.title + " " + a.summary + " " + a.tag).toLowerCase();
+          return !term || hay.includes(term);
+        });
+
+      articleList.innerHTML = items.map(a => {
+        const content = `
+          <div>
+            <b>${a.title}</b>
+            <p>${a.summary || ""}</p>
+            <p class="muted" style="margin-top:6px;">${fmtDate(a.date)} • ${a.tag || ""}</p>
+          </div>
+          <div class="pill">${a.url ? "Read" : "Note"}</div>
+        `;
+        return a.url
+          ? `<a class="item" href="${a.url}" target="_blank" rel="noopener">${content}</a>`
+          : `<div class="item">${content}</div>`;
+      }).join("");
+
+      if(items.length === 0){
+        articleList.innerHTML = `<div class="muted">No articles match your search.</div>`;
+      }
+    }
+    articleSearch.addEventListener("input", renderArticles);
+
+    // === Events ===
+    const eventTimeline = $("#eventTimeline");
+    const eventSearch = $("#eventSearch");
+
+    function renderEvents(){
+      const term = eventSearch.value.trim().toLowerCase();
+      const items = SITE.events
+        .slice()
+        .sort((a,b) => (a.date || "").localeCompare(b.date || ""))
+        .filter(ev => {
+          const hay = (ev.title + " " + ev.location + " " + ev.note).toLowerCase();
+          return !term || hay.includes(term);
+        });
+
+      eventTimeline.innerHTML = items.map(ev => `
+        <div class="event">
+          <time>${fmtDate(ev.date)}</time>
+          <div>
+            <b>${ev.title}</b>
+            <small>${ev.location || ""}${ev.note ? " • " + ev.note : ""}</small>
+          </div>
+        </div>
+      `).join("");
+
+      if(items.length === 0){
+        eventTimeline.innerHTML = `<div class="muted">No events match your search.</div>`;
+      }
+    }
+    eventSearch.addEventListener("input", renderEvents);
+
+    // === Contact ===
+    const c = SITE.contact;
+    $("#btnLinkedIn").href = c.linkedin || "#";
+    $("#btnInstagram").href = c.instagram || "#";
+    $("#contactDetails").innerHTML = `
+      <div><span class="muted">Email:</span> ${c.email}</div>
+      <div><span class="muted">Phone:</span> ${c.phone}</div>
+      <div><span class="muted">Location:</span> ${c.location}</div>
+    `;
+
+    $("#btnEmail").addEventListener("click", () => {
+      window.location.href = `mailto:${encodeURIComponent(c.email)}?subject=${encodeURIComponent("Website contact")}`;
+    });
+
+    $("#contactForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = $("#name").value.trim();
+      const email = $("#email").value.trim();
+      const message = $("#message").value.trim();
+      const subject = `Website message from ${name}`;
+      const body = `Name: ${name}\nEmail: ${email}\n\n${message}\n`;
+      window.location.href = `mailto:${encodeURIComponent(c.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+
+    // First render
+    renderPhotos();
+    renderArticles();
+    renderEvents();
+  </script>
+</body>
+</html>
