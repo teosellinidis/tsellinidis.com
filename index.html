@@ -105,6 +105,58 @@
       background: rgba(16,24,42,.55);
       padding:8px 10px; border-radius: 999px;
     }
+/* Clickable chips + pop menu */
+.chipBtn{
+  font-size:12px; color: var(--text);
+  border:1px solid var(--border);
+  background: rgba(16,24,42,.55);
+  padding:8px 10px; border-radius: 999px;
+  cursor:pointer;
+  transition: transform .08s ease, background .18s ease, border-color .18s ease;
+}
+.chipBtn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.06);
+  border-color: rgba(122,162,255,.35);
+}
+
+.popMenu{
+  position: fixed;
+  z-index: 9999;
+  min-width: 220px;
+  border:1px solid var(--border);
+  background: linear-gradient(180deg, rgba(16,24,42,.98), rgba(16,24,42,.88));
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 8px;
+  display:none;
+}
+.popMenu[aria-hidden="false"]{
+  display:block;
+}
+
+.popMenu .mi{
+  width:100%;
+  text-align:left;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  padding:10px 10px;
+  border-radius: 12px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.popMenu .mi:hover{
+  background: rgba(255,255,255,.06);
+  border-color: rgba(122,162,255,.35);
+}
+.popMenu .mi small{
+  color: var(--muted);
+  font-size:11px;
+}
 
     main{
       margin-top:18px;
@@ -502,7 +554,8 @@ articles: [
     $("#siteTagline").textContent = SITE.tagline;
     $("#heroTitle").textContent = SITE.heroTitle;
     $("#heroDesc").textContent = SITE.heroDesc;
-    $("#chips").innerHTML = SITE.chips.map(c => `<span class="chip">${c}</span>`).join("");
+   $("#chips").innerHTML = SITE.chips.map(c => `<button class="chipBtn" type="button" data-chip="${c}">${c}</button>`).join("");
+;
     $("#year").textContent = new Date().getFullYear();
 
     // === Tabs navigation ===
@@ -707,6 +760,7 @@ photoChips.addEventListener("click", (e) => {
   </script>
 </body>
 </html>
+
 
 
 
