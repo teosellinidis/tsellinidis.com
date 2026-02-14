@@ -561,6 +561,119 @@ articles: [
     // === Tabs navigation ===
     function showSection(view){
       $$(".tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === view)));
+      // === Chip popup menus ===
+const CHIP_MENUS = {
+  "Maritime Automation": [
+    { label: "Open Automation photos", hint: "Filter: Automation", action: () => { showSection("photos"); setPhotoCategory("Automation"); } },
+    { label: "Search Automation articles", hint: "Search: Automation", action: () => { showSection("articles"); setArticleSearch("Automation"); } }
+  ],
+  "Electrical Power Systems": [
+    { label: "Open ACB photos", hint: "Filter: ACB", action: () => { showSection("photos"); setPhotoCategory("ACB"); } },
+    { label: "Search ACB articles", hint: "Search: ACB", action: () => { showSection("articles"); setArticleSearch("ACB"); } }
+  ],
+  "Fleet Technical Management": [
+    { label: "Search Ops articles", hint: "Search: Ops", action: () => { showSection("articles"); setArticleSearch("Ops"); } },
+    { label: "Open Events", hint: "Timeline", action: () => { showSection("events"); } }
+  ],
+  "Class & OEM Compliance": [
+    { label: "Search Compliance articles", hint: "Search: Compliance", action: () => { showSection("articles"); setArticleSearch("Compliance"); } },
+    { label: "Open Events", hint: "Conferences", action: () => { showSection("events"); } }
+  ],
+  "Retrofits & Troubleshooting": [
+    { label: "Open Automation photos", hint: "Filter: Automation", action: () => { showSection("photos"); setPhotoCategory("Automation"); } },
+    { label: "Search Troubleshooting articles", hint: "Search: Troubleshooting", action: () => { showSection("articles"); setArticleSearch("Troubleshooting"); } }
+  ]
+};
+
+// These functions must exist BEFORE chip menu actions run.
+// We'll define them as safe wrappers (they will work after the variables exist).
+function setPhotoCategory(cat){
+  if(!photoFilter) return;
+  const opt = [...photoFilter.options].find(o => o.value === cat);
+  photoFilter.value = opt ? cat : "all";
+  renderPhotos();
+  if(typeof renderCategoryChips === "function") renderCategoryChips();
+}
+function setArticleSearch(term){
+  if(!articleSearch) return;
+  articleSearch.value = term;
+  renderArticles();
+}
+
+// Pop menu element
+const popMenu = document.createElement("div");
+popMenu.className = "popMenu";
+popMenu.setAttribute("aria-hidden", "true");
+document.body.appendChild(popMenu);
+
+let popOpenFor = null;
+
+function closePop(){
+  popMenu.setAttribute("aria-hidden", "true");
+  popMenu.innerHTML = "";
+  popOpenFor = null;
+}
+
+function openPopFor(btn, chipLabel){
+  const items = CHIP_MENUS[chipLabel] || [];
+  if(items.length === 0) return;
+
+  popMenu.innerHTML = items.map((it, i) => `
+    <button class="mi" type="button" data-idx="${i}">
+      <span>${it.label}</span>
+      <small>${it.hint || ""}</small>
+    </button>
+  `).join("");
+
+  const r = btn.getBoundingClientRect();
+  const pad = 8;
+  const menuWidth = 280;
+
+  let top = r.bottom + pad;
+  let left = r.left;
+
+  if(left + menuWidth > window.innerWidth - 10) left = window.innerWidth - menuWidth - 10;
+  if(left < 10) left = 10;
+
+  popMenu.style.top = `${Math.min(top, window.innerHeight - 20)}px`;
+  popMenu.style.left = `${left}px`;
+  popMenu.setAttribute("aria-hidden", "false");
+  popOpenFor = { chipLabel, items };
+}
+
+// Chip click
+$("#chips").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-chip]");
+  if(!btn) return;
+  const label = btn.dataset.chip;
+
+  if(popOpenFor && popOpenFor.chipLabel === label){
+    closePop();
+    return;
+  }
+  openPopFor(btn, label);
+});
+
+// Menu click
+popMenu.addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-idx]");
+  if(!b || !popOpenFor) return;
+  const idx = Number(b.dataset.idx);
+  const item = popOpenFor.items[idx];
+  closePop();
+  try{ item.action(); } catch {}
+});
+
+// Close on outside click / escape / resize / scroll
+document.addEventListener("click", (e) => {
+  if(popMenu.getAttribute("aria-hidden") === "true") return;
+  const inside = e.target.closest(".popMenu") || e.target.closest("button[data-chip]");
+  if(!inside) closePop();
+});
+document.addEventListener("keydown", (e) => { if(e.key === "Escape") closePop(); });
+window.addEventListener("resize", closePop);
+window.addEventListener("scroll", closePop, { passive:true });
+
       $$("[data-section]").forEach(sec => {
         const isTarget = sec.getAttribute("data-section") === view;
         sec.hidden = !isTarget;
@@ -760,6 +873,7 @@ photoChips.addEventListener("click", (e) => {
   </script>
 </body>
 </html>
+
 
 
 
